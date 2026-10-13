@@ -1,6 +1,7 @@
 # 🎮 Block Blast! 3D & Tetris - 16:9 Landscape Fullscreen PWA
 
-> 🌐 **Live Demo (Cloudflare Pages)**: [https://block-blast-2fw.pages.dev](https://block-blast-2fw.pages.dev)  
+> 🌐 **Live Demo (Cloudflare)**: [https://blockblast.zhafranramadhan.workers.dev](https://blockblast.zhafranramadhan.workers.dev)  
+> ⚡ **Mirror (Pages)**: [https://block-blast-2fw.pages.dev](https://block-blast-2fw.pages.dev)  
 > 📦 **GitHub Repository**: [https://github.com/ZhafranRMD/block-blast](https://github.com/ZhafranRMD/block-blast)
 
 ---
