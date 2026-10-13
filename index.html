@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Block Blast! - Game Puzzle Balok 3D 16:9 Fullscreen</title>
+    <meta name="description" content="Game Block Blast dan Tetris Balok 3D 16:9 Landscape Fullscreen dengan grafis memukau, combo blast, dan efek neon spektakuler!">
+    
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#071330">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Block Blast">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+    <link rel="icon" type="image/jpeg" href="icon.jpg">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Background Neon Atmosphere -->
+        <div class="background-grid"></div>
+        <div class="light-shaft"></div>
+        <div class="perspective-floor"></div>
+        <div class="horizon-bar"></div>
+
+        <!-- Left Decorative Block Pillar -->
+        <aside class="side-pillar pillar-left">
+            <div class="pillar-row"><div class="side-block sb-cyan"></div></div>
+            <div class="pillar-row"><div class="side-block sb-purple"></div><div class="side-block sb-purple"></div></div>
+            <div class="pillar-row"><div class="side-block sb-purple"></div><div class="side-block sb-blue"></div></div>
+            <div class="pillar-row"><div class="side-block sb-cyan"></div><div class="side-block sb-red"></div></div>
+            <div class="pillar-row"><div class="side-block sb-red"></div></div>
+        </aside>
+
+        <!-- Right Decorative Block Pillar -->
+        <aside class="side-pillar pillar-right">
+            <div class="pillar-row"><div class="side-block sb-cyan"></div><div class="side-block sb-purple"></div></div>
+            <div class="pillar-row"><div class="side-block sb-purple"></div><div class="side-block sb-orange"></div></div>
+            <div class="pillar-row"><div class="side-block sb-orange"></div><div class="side-block sb-orange"></div></div>
+            <div class="pillar-row"><div class="side-block sb-green"></div></div>
+            <div class="pillar-row"><div class="side-block sb-green"></div></div>
+        </aside>
+
+        <!-- Mobile Landscape Prompt Banner (visible only on mobile portrait) -->
+        <div id="landscapePrompt" class="landscape-prompt">
+            <div class="prompt-text">
+                <span class="prompt-icon">📱↻</span>
+                <span>Putar layar ke <strong>16:9 Landscape</strong> untuk visual terbaik!</span>
+            </div>
+            <button id="promptFsBtn" class="prompt-fs-btn" title="Aktifkan Layar Penuh">⛶ Layar Penuh</button>
+        </div>
+
+        <!-- Main 16:9 Game Screen -->
+        <main class="game-wrapper">
+            <!-- Left Wing / Sidebar (Logo, Mode Selector, Score HUD, Quick Actions) -->
+            <section class="game-side-left">
+                <!-- 3D Logo matching Reference Poster -->
+                <div class="logo-container">
+                    <div class="block-letters">
+                        <span class="b-letter b-b">B</span>
+                        <span class="b-letter b-l">L</span>
+                        <span class="b-letter b-o">
+                            <!-- Golden Crown on O -->
+                            <svg class="crown-icon" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="crownGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#FFF176" />
+                                        <stop offset="50%" stop-color="#FFD700" />
+                                        <stop offset="100%" stop-color="#FFA000" />
+                                    </linearGradient>
+                                    <linearGradient id="gemRed" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#FF5252" />
+                                        <stop offset="100%" stop-color="#D50000" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M10 65 L20 22 L45 42 L50 10 L55 42 L80 22 L90 65 Z" fill="url(#crownGold)" stroke="#C68A00" stroke-width="4" stroke-linejoin="round"/>
+                                <rect x="12" y="62" width="76" height="12" rx="4" fill="url(#crownGold)" stroke="#C68A00" stroke-width="3"/>
+                                <circle cx="20" cy="22" r="6" fill="url(#gemRed)" stroke="#FFF" stroke-width="1.5"/>
+                                <circle cx="50" cy="10" r="7" fill="url(#gemRed)" stroke="#FFF" stroke-width="1.5"/>
+                                <circle cx="80" cy="22" r="6" fill="url(#gemRed)" stroke="#FFF" stroke-width="1.5"/>
+                            </svg>
+                            O
+                        </span>
+                        <span class="b-letter b-c">C</span>
+                        <span class="b-letter b-k">K</span>
+                    </div>
+                    <div class="blast-text">BLAST</div>
+                    <div class="subtitle">16:9 LANDSCAPE FULLSCREEN</div>
+                </div>
+
+                <!-- Mode Selector -->
+                <div class="mode-selector">
+                    <button id="modeBlockblast" class="mode-btn active" title="Block Blast 8x8 Mode">
+                        <span>🌟</span> Block Blast
+                    </button>
+                    <button id="modeTetris" class="mode-btn" title="Tetris Falling Mode">
+                        <span>🕹️</span> Tetris
+                    </button>
+                </div>
+
+                <!-- HUD: Score, Best Score, Combo -->
+                <div class="score-hud">
+                    <div class="score-box">
+                        <span class="score-label">SCORE</span>
+                        <span id="scoreVal" class="score-val">0</span>
+                    </div>
+
+                    <!-- Combo Streak Badge -->
+                    <div id="comboBadge" class="combo-badge">
+                        <span>🔥</span> <span id="comboText">COMBO x2!</span>
+                    </div>
+
+                    <div class="high-score-box">
+                        <svg class="best-crown" viewBox="0 0 100 80" fill="none">
+                            <path d="M10 65 L20 22 L45 42 L50 10 L55 42 L80 22 L90 65 Z" fill="#FACC15" stroke="#CA8A04" stroke-width="4"/>
+                            <rect x="12" y="62" width="76" height="12" rx="4" fill="#FACC15"/>
+                        </svg>
+                        <div class="score-box">
+                            <span class="score-label">BEST</span>
+                            <span id="highScoreVal" class="high-score-val">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Toolbar -->
+                <div class="quick-actions">
+                    <button id="fullscreenBtn" class="icon-btn fs-btn" title="Layar Penuh (16:9 Fullscreen) [F]">⛶</button>
+                    <button id="installPwaBtn" class="icon-btn install-btn" title="Pasang Aplikasi (Install PWA)" style="display:none;">📥</button>
+                    <button id="presetBtn" class="icon-btn" title="Muat Ulang Layout Poster Foto (T-Block)">🖼️</button>
+                    <button id="restartBtn" class="icon-btn" title="Mulai Papan Kosong Baru [R]">🧹</button>
+                    <button id="sfxBtn" class="icon-btn" title="Toggle Sound FX">🔊</button>
+                    <button id="bgmBtn" class="icon-btn" title="Toggle Music [M]">🎵</button>
+                </div>
+            </section>
+
+            <!-- Center Stage: Giant Interactive Canvas -->
+            <section class="game-center-stage">
+                <div class="canvas-wrapper">
+                    <canvas id="gameCanvas"></canvas>
+                </div>
+            </section>
+
+            <!-- Right Wing / Sidebar: Power-Ups & Tetris Touch Controls & Info -->
+            <section class="game-side-right">
+                <!-- Block Blast Power-Ups Toolbar -->
+                <div id="powerupsBar" class="powerups-bar">
+                    <div class="panel-header-title">POWER-UPS</div>
+                    <button id="bombBtn" class="powerup-btn" title="Hancurkan area 3x3 balok">
+                        <span class="powerup-icon">💣</span>
+                        <div class="powerup-info">
+                            <span class="powerup-name">Bomb</span>
+                            <span class="powerup-desc">Pecah 3x3</span>
+                        </div>
+                        <span id="bombCount" class="powerup-count">2</span>
+                    </button>
+                    <button id="hammerBtn" class="powerup-btn" title="Hancurkan 1 balok pilihanmu">
+                        <span class="powerup-icon">🔨</span>
+                        <div class="powerup-info">
+                            <span class="powerup-name">Hammer</span>
+                            <span class="powerup-desc">Pukul 1 balok</span>
+                        </div>
+                        <span id="hammerCount" class="powerup-count">2</span>
+                    </button>
+                    <button id="refreshBtn" class="powerup-btn" title="Ganti 3 balok di rak">
+                        <span class="powerup-icon">🔄</span>
+                        <div class="powerup-info">
+                            <span class="powerup-name">Refresh</span>
+                            <span class="powerup-desc">Ganti rak</span>
+                        </div>
+                        <span id="refreshCount" class="powerup-count">2</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Tetris Touch Controls (Visible in Tetris mode) -->
+                <div id="tetrisControls" class="tetris-controls">
+                    <div class="panel-header-title">KONTROL TETRIS</div>
+                    <div class="dpad-row">
+                        <button id="btnLeft" class="ctrl-btn" title="Kiri">◀</button>
+                        <button id="btnDown" class="ctrl-btn" title="Turun Pelan">▼</button>
+                        <button id="btnRight" class="ctrl-btn" title="Kanan">▶</button>
+                    </div>
+                    <div class="action-row">
+                        <button id="btnHold" class="ctrl-btn hold-btn" title="Simpan Balok">HOLD</button>
+                        <button id="btnRotate" class="ctrl-btn rotate-btn" title="Putar Balok">↻</button>
+                        <button id="btnDrop" class="ctrl-btn hard-drop" title="Jatuhkan Cepat">⚡</button>
+                    </div>
+                </div>
+
+                <!-- 16:9 Arcade Info Card -->
+                <div class="arcade-card">
+                    <div class="card-badge">✨ 16:9 FULLSCREEN ARCADE</div>
+                    <div class="card-content">
+                        <p class="guide-item"><span>🎯</span> Tarik balok ke papan untuk blast combo spektakuler!</p>
+                        <p class="guide-item"><span>⌨️</span> <strong>[F]</strong> Layar Penuh &nbsp;|&nbsp; <strong>[M]</strong> Musik &nbsp;|&nbsp; <strong>[R]</strong> Ulang</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Game Over Modal -->
+        <div id="gameOverModal" class="modal-overlay">
+            <div class="gameover-card">
+                <svg class="modal-crown" viewBox="0 0 100 80" fill="none">
+                    <path d="M10 65 L20 22 L45 42 L50 10 L55 42 L80 22 L90 65 Z" fill="#FACC15" stroke="#CA8A04" stroke-width="4"/>
+                    <rect x="12" y="62" width="76" height="12" rx="4" fill="#FACC15"/>
+                    <circle cx="20" cy="22" r="6" fill="#EF4444"/>
+                    <circle cx="50" cy="10" r="7" fill="#EF4444"/>
+                    <circle cx="80" cy="22" r="6" fill="#EF4444"/>
+                </svg>
+                <h2 class="modal-title">GAME OVER</h2>
+                <div class="modal-score-wrap">
+                    <span class="score-label">FINAL SCORE</span>
+                    <div id="modalScore" class="modal-score-val">0</div>
+                    <div class="modal-best">Rekor Terbaik: <span id="modalBest">0</span></div>
+                </div>
+                <div class="modal-btns">
+                    <button id="reviveModalBtn" class="revive-btn">
+                        <span>⚡</span> Lanjutkan (Revive)
+                    </button>
+                    <button id="restartModalBtn" class="primary-btn">
+                        Main Lagi (Play Again)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="audio.js"></script>
+    <script src="renderer.js"></script>
+    <script src="blockblast.js"></script>
+    <script src="tetris.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
