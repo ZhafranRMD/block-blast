@@ -1,6 +1,7 @@
 # 🎮 Block Blast! 3D & Tetris - 16:9 Landscape Fullscreen PWA
 
-Game arcade puzzle balok 3D modern yang menggabungkan mode **Block Blast 8x8** dan **Classic Tetris**, dirancang khusus dengan visual neon cyber spektakuler, audio blast dinamis, dukungan layar lebar **16:9 Landscape Fullscreen**, serta siap diinstal sebagai **Progressive Web App (PWA)** offline!
+> 🌐 **Live Demo (Cloudflare Pages)**: [https://block-blast-2fw.pages.dev](https://block-blast-2fw.pages.dev)  
+> 📦 **GitHub Repository**: [https://github.com/ZhafranRMD/block-blast](https://github.com/ZhafranRMD/block-blast)
 
 ---
 
